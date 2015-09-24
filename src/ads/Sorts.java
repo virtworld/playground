@@ -3,20 +3,32 @@ package ads;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Random;
 
 public class Sorts {
 
-	public Sorts() {
-		// TODO Auto-generated constructor stub
-	}
-
-
+	/**
+	 * QuickSort on an array of elements of type T that are subtype of Comparable<? extends T>
+	 *  
+	 * @param arr an array of elements of type T that are subtype of Comparable<? extends T> that to be sorted
+	 */
 	public static <T extends Comparable<? super T>> void quickSort(T[] arr){
+
+		// List is backed by the array, changes on the list write through to the array.
 		quickSort( Arrays.asList(arr));
 	}
 	
+	/**
+	 * QuickSort on a List of elements of type T that are subtype of Comparable<? extends T>
+	 *  
+	 * @param arr a List of elements of type T that are subtype of Comparable<? extends T> that to be sorted
+	 */
 	public static <T extends Comparable<? super T>> void quickSort(List<T> arr){
+		
+		// Add randomness to the input data
+		Random random = new Random();
+		Collections.swap(arr, random.nextInt(arr.size()), arr.size() - 1);
+		
 		quickSortHelp(arr, 0, arr.size() - 1);
 	}
 	
