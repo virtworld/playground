@@ -90,5 +90,28 @@ public class SortsTest {
 			}	
 		}
 	}
+	
+	@Test
+	public void testRadixSort(){
+		
+		Random random = new Random();
+		
+		for(int tc = 0; tc < TEST_CASE; tc++){
+			int[] array1 = new int[ARRAY_SIZE];
+			int[] array2 = new int[ARRAY_SIZE];
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				int v = random.nextInt(RANGE);
+				array1[i] = array2[i] = v;
+			}
+			
+			Arrays.sort(array1);
+			Sorts.radixSort(array2);
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				Assert.assertEquals( array1[i], array2[i]);
+			}	
+		}
+	}
 
 }

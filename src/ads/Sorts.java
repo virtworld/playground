@@ -8,6 +8,10 @@ import java.util.Random;
 
 public class Sorts {
 
+	//***************************************************************
+	//-------------------Quick Sort----------------------------------
+	//***************************************************************
+	
 	/**
 	 * QuickSort on an array of elements of type T that are subtype of Comparable<? extends T>
 	 *  
@@ -33,6 +37,34 @@ public class Sorts {
 		quickSortHelp(arr, 0, arr.size() - 1);
 		
 	}
+	
+	private static <T extends Comparable<? super T>> void quickSortHelp(List<T> arr, int l, int h){
+		if(l < h){
+			int postion = partition(arr, l, h);
+			quickSortHelp(arr, l, postion - 1);
+			quickSortHelp(arr, postion + 1, h);
+		}
+	}
+	
+	private static <T extends Comparable<? super T>> int partition(List<T> arr, int l, int r){
+		T pivot = arr.get(r);
+		int swapFlag = l - 1;
+		
+		for(int i = l; i < r; i++){
+			if( arr.get(i).compareTo(pivot) < 0){
+				Collections.swap(arr, swapFlag + 1, i);
+				swapFlag++;
+			}
+		}
+		
+		Collections.swap(arr, r, swapFlag + 1);
+		return swapFlag + 1;
+	}
+	
+	
+	//***************************************************************
+	//-------------------Merge Sort----------------------------------
+	//***************************************************************
 	
 	/**
 	 * Merge Sort on an array of objects
@@ -75,34 +107,6 @@ public class Sorts {
 		return mergeSortHelp(firstSeg, secondSeg);
 	}
 	
-	/**
-	 * Counting Sort on an array of integers.
-	 * @param arr an array to be sorted
-	 * @param k the range of the input values must be [0, k)
-	 * @return an sorted array.
-	 */
-	
-	public static int[] countingSort(int[] arr, int k){
-	
-		int[] result = new int[arr.length];
-		int[] count = new int[k];
-		
-		for (int i : arr) {
-			count[i]++;
-		}
-		
-		for(int i = 1; i < k; i++){
-			count[i] = count[i] + count[i - 1];
-		}
-		
-		for(int i = arr.length - 1; i >= 0; i--){
-			result[ count[arr[i]] - 1] = arr[i];
-			count[ arr[i]]--;
-		}
-		
-		return result;
-	}
-	
 	private static <T extends Comparable<? super T>> List<T> mergeSortHelp(List<T> arr1, List<T> arr2){
 		
 		List<T> result = new ArrayList<T>(arr1.size() + arr2.size());
@@ -132,28 +136,85 @@ public class Sorts {
 
 		return result;
 	}
+
+	//***************************************************************
+	//-------------------Counting Sort-------------------------------
+	//***************************************************************
 	
+	/**
+	 * Counting Sort on an array of integers.
+	 * @param arr an array to be sorted
+	 * @param k the range of the input values must be [0, k)
+	 * @return an sorted array.
+	 */
+	public static int[] countingSort(int[] arr, int k){
 	
-	private static <T extends Comparable<? super T>> void quickSortHelp(List<T> arr, int l, int h){
-		if(l < h){
-			int postion = partition(arr, l, h);
-			quickSortHelp(arr, l, postion - 1);
-			quickSortHelp(arr, postion + 1, h);
+		int[] result = new int[arr.length];
+		int[] count = new int[k];
+		
+		for (int i : arr) {
+			count[i]++;
 		}
+		
+		for(int i = 1; i < k; i++){
+			count[i] = count[i] + count[i - 1];
+		}
+		
+		for(int i = arr.length - 1; i >= 0; i--){
+			result[ count[arr[i]] - 1] = arr[i];
+			count[ arr[i]]--;
+		}
+		
+		return result;
 	}
 	
-	private static <T extends Comparable<? super T>> int partition(List<T> arr, int l, int r){
-		T pivot = arr.get(r);
-		int swapFlag = l - 1;
+	//***************************************************************
+	//-------------------Radix Sort----------------------------------
+	//***************************************************************
+	
+	/**
+	 * Radix sort on an array of positive integers
+	 * @param arr an array of positive integers
+	 */
+	public static void radixSort(int[] arr){
 		
-		for(int i = l; i < r; i++){
-			if( arr.get(i).compareTo(pivot) < 0){
-				Collections.swap(arr, swapFlag + 1, i);
-				swapFlag++;
+		// Get maximum number of digits
+		int max = Integer.MIN_VALUE;
+		for (int i : arr) {
+			max = (i > max) ? i : max;
+		}
+		
+		int maxNumberOfDigits = 0;
+		while(max > 0){
+			max /= 10;
+			maxNumberOfDigits++;
+		}
+		
+		int radix = 1;
+		for(int d = 0; d < maxNumberOfDigits; d++){
+			
+			int[] count = new int[10];
+			int[] results = new int[arr.length];
+			
+			for (int i : arr) { // number of each digit at d * radix position
+				count[ i / radix % 10]++;
 			}
+			
+			for(int i = 1; i < 10; i++){
+				count[i] = count[i] + count[i - 1];
+			}
+			
+			for( int i = arr.length - 1; i >= 0; i--){
+				results[ count[ arr[ i] / radix % 10] - 1] = arr[i];
+				count[ arr[ i] / radix % 10]--;
+			}
+			
+			for (int i  = 0; i < arr.length; i++) {
+				arr[i] = results[i];
+			}
+			
+			radix *= 10;
 		}
-		
-		Collections.swap(arr, r, swapFlag + 1);
-		return swapFlag + 1;
 	}
+	
 }
