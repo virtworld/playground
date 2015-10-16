@@ -9,11 +9,12 @@ import java.util.Random;
 import org.junit.Assert; 
 import org.junit.Test;
 
+import ads.Sorts;
+
 
 public class SortsTest {
 
 	public static final int TEST_CASE = 10;
-	
 	public static final int ARRAY_SIZE = 1000;
 	public static final int RANGE = 1000;
 	
@@ -32,7 +33,7 @@ public class SortsTest {
 			}
 			
 			Arrays.sort(array1);
-			ads.Sorts.quickSort(array2);
+			Sorts.quickSort(array2);
 			
 			
 			for(int i = 0; i < ARRAY_SIZE; i++){
@@ -58,11 +59,34 @@ public class SortsTest {
 			}
 			
 			Collections.sort(arr1);
-			arr2 = ads.Sorts.mergeSort(arr2);
+			arr2 = Sorts.mergeSort(arr2);
 			
 			for(int i = 0; i < ARRAY_SIZE; i++){
 				
 				Assert.assertEquals( arr1.get(i).intValue(), arr2.get(i).intValue());
+			}	
+		}
+	}
+	
+	@Test
+	public void testCountingSort(){
+		
+		Random random = new Random();
+		
+		for(int tc = 0; tc < TEST_CASE; tc++){
+			int[] array1 = new int[ARRAY_SIZE];
+			int[] array2 = new int[ARRAY_SIZE];
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				int v = random.nextInt(RANGE);
+				array1[i] = array2[i] = v;
+			}
+			
+			Arrays.sort(array1);
+			array2 = Sorts.countingSort(array2, RANGE);
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				Assert.assertEquals( array1[i], array2[i]);
 			}	
 		}
 	}

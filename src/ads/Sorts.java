@@ -75,6 +75,34 @@ public class Sorts {
 		return mergeSortHelp(firstSeg, secondSeg);
 	}
 	
+	/**
+	 * Counting Sort on an array of integers.
+	 * @param arr an array to be sorted
+	 * @param k the range of the input values must be [0, k)
+	 * @return an sorted array.
+	 */
+	
+	public static int[] countingSort(int[] arr, int k){
+	
+		int[] result = new int[arr.length];
+		int[] count = new int[k];
+		
+		for (int i : arr) {
+			count[i]++;
+		}
+		
+		for(int i = 1; i < k; i++){
+			count[i] = count[i] + count[i - 1];
+		}
+		
+		for(int i = arr.length - 1; i >= 0; i--){
+			result[ count[arr[i]] - 1] = arr[i];
+			count[ arr[i]]--;
+		}
+		
+		return result;
+	}
+	
 	private static <T extends Comparable<? super T>> List<T> mergeSortHelp(List<T> arr1, List<T> arr2){
 		
 		List<T> result = new ArrayList<T>(arr1.size() + arr2.size());
