@@ -247,4 +247,44 @@ public class Sorts {
 				Collections.swap(list, j, j + 1);
 	}
 
+	//***************************************************************
+	//-------------------Selection Sort------------------------------
+	//***************************************************************
+	/**
+	 * Selection sort on a list of comparable objects in ascending order
+	 * @param list a list of comparable objects
+	 */
+	public static <T extends Comparable<? super T>> void selectionSort(List<T> list){
+		
+		selectionSort(list, true);
+	}
+	
+	/**
+	 * Selection sort on a list of comparable objects
+	 * @param list a list of comparable objects
+	 * @param ascending true if the list need to be sorted in ascending order, false otherwise
+	 */
+	public static <T extends Comparable<? super T>> void selectionSort(List<T> list, boolean ascending){
+		
+		if( list.size() <= 1) return;
+		
+		for(int j = list.size() - 1; j >= 0 ; j--){
+			
+			int position = 0;
+			
+			for(int i = 1; i <= j; i++){
+				
+				T current = list.get(i);
+				if(ascending){
+					if(list.get(position).compareTo(current) < 0) 
+						position = i;// find the maximum
+				}else{
+					if(list.get(position).compareTo(current) > 0) 
+						position = i;// find the minimum
+				}
+			}
+			
+			Collections.swap(list, position, j);
+		}
+	}
 }
