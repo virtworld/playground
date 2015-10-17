@@ -217,4 +217,34 @@ public class Sorts {
 		}
 	}
 	
+	//***************************************************************
+	//-------------------Insertion Sort------------------------------
+	//***************************************************************
+	
+	/**
+	 * Insertion sort on a list of comparable objects in ascending order
+	 * @param list a list of comparable objects
+	 */
+	public static  <T extends Comparable<? super T>> void insertionSort(List<T> list){
+		
+		insertionSort(list, true);
+	}
+	
+	/**
+	 * Insertion sort on a list of comparable objects
+	 * @param list a list of comparable objects
+	 * @param ascending true if the list need to be sorted in ascending order, false otherwise
+	 */
+	public static  <T extends Comparable<? super T>> void insertionSort(List<T> list, boolean ascending)
+	{
+	    
+	    for (int i = 1; i < list.size(); i++) 
+			for(int j = i - 1; 
+				j >= 0 && (ascending ? 
+						  list.get(j).compareTo( list.get(j + 1)) > 0 : 
+						  list.get(j).compareTo( list.get(j + 1)) < 0); 
+				j--)
+				Collections.swap(list, j, j + 1);
+	}
+
 }
