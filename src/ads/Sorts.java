@@ -324,8 +324,46 @@ public class Sorts {
 	//-------------------Cocktail Sort--------------------------------
 	//***************************************************************
 	
+	/**
+	 * Cocktail sort on a list of comparable objects in ascending order
+	 * @param list a list of comparable objects
+	 */
+	public static <T extends Comparable<? super T>> void cocktailSort(List<T> list){
+		cocktailSort(list, true);
+	}
+	
+	/**
+	 * Cocktail sort on a list of comparable objects
+	 * @param list a list of comparable objects
+	 * @param ascending true if the list need to be sorted in ascending order, false otherwise
+	 */
 	public static <T extends Comparable<? super T>> void cocktailSort(List<T> list, boolean ascending){
 		
+		int left = 0; 
+		int right = list.size() - 1;
+		
+		while(left < right){
+			for(int j = 0; j < right; ++j){
+				if( ascending) {
+					if(list.get(j).compareTo( list.get(j + 1)) > 0)
+						Collections.swap(list, j, j + 1); 
+				}else{
+					if(list.get(j).compareTo( list.get(j + 1)) < 0)
+						Collections.swap(list, j, j + 1);
+				}
+			}
+			right--;
+			for(int j = right; j > left; --j){
+				if( ascending) {
+					if(list.get(j).compareTo( list.get(j - 1)) < 0)
+						Collections.swap(list, j, j - 1); 
+				}else{
+					if(list.get(j).compareTo( list.get(j - 1)) > 0)
+						Collections.swap(list, j, j - 1);
+				}
+			}
+			left++;
+		}
 	}
 	
 }
