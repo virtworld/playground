@@ -162,4 +162,27 @@ public class SortsTest {
 			}	
 		}
 	}
+	
+	@Test
+	public void testBubbleSort(){
+		Random random = new Random();
+		
+		for(int tc = 0; tc < TEST_CASE; tc++){
+			List<Integer> arr1 = new ArrayList<Integer>();
+			List<Integer> arr2 = new ArrayList<Integer>();
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				int v = random.nextInt(RANGE);
+				arr1.add( v);
+				arr2.add( v);
+			}
+			
+			Collections.sort(arr1);
+			Sorts.bubbleSort(arr2, true);
+			
+			for(int i = 0; i < ARRAY_SIZE; i++){
+				Assert.assertEquals( arr1.get(i).intValue(), arr2.get(i).intValue());
+			}	
+		}
+	}
 }

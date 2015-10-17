@@ -287,4 +287,45 @@ public class Sorts {
 			Collections.swap(list, position, j);
 		}
 	}
+	
+	//***************************************************************
+	//-------------------Bubble Sort--------------------------------
+	//***************************************************************
+	
+	/**
+	 * Bubble sort on a list of comparable objects in ascending order
+	 * @param list a list of comparable objects
+	 */
+	public static <T extends Comparable<? super T>> void bubbleSort(List<T> list){
+		bubbleSort(list, true);
+	}
+	
+	/**
+	 * Bubble sort on a list of comparable objects
+	 * @param list a list of comparable objects
+	 * @param ascending true if the list need to be sorted in ascending order, false otherwise
+	 */
+	public static <T extends Comparable<? super T>> void bubbleSort(List<T> list, boolean ascending){
+		
+		for(int i = list.size() - 1; i >= 0; i--){
+			for(int j = 0; j < i; ++j){
+				if( ascending) {
+					if(list.get(j).compareTo( list.get(j + 1)) > 0)
+						Collections.swap(list, j, j + 1); 
+				}else{
+					if(list.get(j).compareTo( list.get(j + 1)) < 0)
+						Collections.swap(list, j, j + 1);
+				}
+			}
+		}
+	}
+
+	//***************************************************************
+	//-------------------Cocktail Sort--------------------------------
+	//***************************************************************
+	
+	public static <T extends Comparable<? super T>> void cocktailSort(List<T> list, boolean ascending){
+		
+	}
+	
 }
